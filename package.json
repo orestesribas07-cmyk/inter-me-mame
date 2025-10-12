@@ -1,5 +1,24 @@
 {
+  "name": "inter-me-mame",
+  "version": "1.0.0",
+  "description": "API e servidor para o site do Inter Me Mame",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "postgresql"
+  ],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "pg": "^8.16.3"
+    "express": "^4.19.2",
+    "pg": "^8.16.3",
+    "cors": "^2.8.5",
+    "express-session": "^1.18.0",
+    "path": "^0.12.7"
   }
 }
