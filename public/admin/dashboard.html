@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Inter Me Mame</title>
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+    <header class="admin-header">
+        <h1>Dashboard - Inter Me Mame</h1>
+        <a href="../index.html" target="_blank">Ver Site</a>
+    </header>
+    <main class="admin-container">
+        <section class="content-manager">
+            <h2>Gerenciar Partidas</h2>
+            <div class="partidas-forms">
+                <form id="proximo-jogo-form" class="admin-form">
+                    <h3>Próximo Jogo</h3>
+                    <div class="form-group"><label for="proximo-jogo-adversario">Adversário</label><input type="text" id="proximo-jogo-adversario" required></div>
+                    <div class="form-group"><label for="proximo-jogo-data">Data e Hora</label><input type="datetime-local" id="proximo-jogo-data" required></div>
+                    <button type="submit" class="btn-admin">Salvar Próximo Jogo</button>
+                </form>
+                <form id="ultimo-resultado-form" class="admin-form">
+                    <h3>Último Resultado</h3>
+                    <div class="form-group"><label for="ultimo-resultado-adversario">Adversário</label><input type="text" id="ultimo-resultado-adversario" required></div>
+                    <div class="form-group"><label for="ultimo-resultado-placar">Placar</label><input type="text" id="ultimo-resultado-placar" required></div>
+                    <button type="submit" class="btn-admin">Salvar Último Resultado</button>
+                </form>
+            </div>
+        </section>
+        <hr class="section-divider">
+        <section class="content-manager">
+            <h2>Gerenciar Notícias</h2>
+            <form id="add-news-form" class="admin-form">
+                <h3>Adicionar / Editar Notícia</h3>
+                <div class="form-group"><label for="news-title">Título</label><input type="text" id="news-title" required></div>
+                <div class="form-group"><label for="news-summary">Resumo</label><textarea id="news-summary" rows="4" required></textarea></div>
+                <div class="form-group"><label for="news-image">URL da Imagem</label><input type="url" id="news-image" required placeholder="/images/nome-da-imagem.jpg"></div>
+                <button type="submit" class="btn-admin" id="submit-button-news">Adicionar Notícia</button>
+            </form>
+            <div class="existing-items"><h3>Notícias Publicadas</h3><div id="lista-noticias"></div></div>
+        </section>
+        <hr class="section-divider">
+        <section class="content-manager">
+            <h2>Gerenciar Elenco</h2>
+            <form id="add-player-form" class="admin-form">
+                <h3>Adicionar / Editar Membro</h3>
+                <div class="form-group"><label for="player-name">Nome</label><input type="text" id="player-name" required></div>
+                <div class="form-group"><label for="player-position">Posição</label><input type="text" id="player-position" required></div>
+                <div class="form-group"><label for="player-goals">Gols</label><input type="number" id="player-goals" required value="0"></div>
+                <div class="form-group"><label for="player-avatar">URL do Avatar</label><input type="url" id="player-avatar" required placeholder="/images/nome-do-jogador.jpg"></div>
+                <button type="submit" class="btn-admin" id="submit-button-player">Adicionar Membro</button>
+            </form>
+            <div class="existing-items"><h3>Membros do Elenco</h3><div id="lista-elenco"></div></div>
+        </section>
+    </main>
+    <script src="admin.js"></script>
+</body>
+</html>
