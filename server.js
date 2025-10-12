@@ -1,12 +1,12 @@
 const express = require('express');
-const { Pool } = require('pg'); // Usando 'pg' para PostgreSQL
+const { Pool } = require('pg'); 
 const cors = require('cors');
 const path = require('path');
 const session = require('express-session');
 
 const app = express();
 
-// CORREÇÃO FINAL: Usa a porta fornecida pelo ambiente do Render, ou 3000 para testes locais.
+// CORREÇÃO FINAL 1: Usa a porta fornecida pelo ambiente do Render
 const PORT = process.env.PORT || 3000; 
 
 // --- MIDDLEWARES ---
@@ -24,8 +24,9 @@ app.use(session({
 
 // --- CONEXÃO COM O BANCO DE DADOS ---
 
-// Usa a DATABASE_URL fornecida pelo Render (Variável de Ambiente)
-const connectionString = process.env.DATABASE_URL || 'postgres://user:password@localhost:5432/inter_me_mame'; 
+// CORREÇÃO FINAL 2: Usa SOMENTE a variável de ambiente DATABASE_URL. 
+// Removemos o fallback local para evitar erros de sintaxe no deploy.
+const connectionString = process.env.DATABASE_URL; 
 
 const pool = new Pool({
     connectionString: connectionString,
@@ -37,6 +38,7 @@ const pool = new Pool({
 
 pool.query('SELECT 1 + 1 AS solution', (err, res) => {
     if (err) { 
+        // Se o deploy falhar aqui, o erro será sobre a conexão SSL ou falta de tabela (o que já corrigimos no DBeaver)
         console.error('Erro ao conectar com o banco de dados:', err.message); 
     } else {
         console.log('Conectado com sucesso ao banco de dados PostgreSQL!');
@@ -54,11 +56,9 @@ function checkAuth(req, res, next) {
 
 // --- ROTAS DA API ---
 
-// ROTA DE LOGIN (PÚBLICA)
 app.post('/api/login', (req, res) => {
     console.log("Recebi uma tentativa de login com:", req.body); 
     const { username, password } = req.body;
-    // Autenticação fixa:
     if (username === 'Gamarra' && password === 'lucasgp120') { 
         req.session.loggedIn = true;
         res.json({ success: true });
@@ -67,12 +67,10 @@ app.post('/api/login', (req, res) => {
     }
 });
 
-// ROTA PARA VERIFICAR LOGIN (PÚBLICA)
 app.get('/api/check-auth', (req, res) => {
     res.json({ loggedIn: !!req.session.loggedIn });
 });
 
-// ROTAS DE LEITURA (PÚBLICAS)
 app.get('/api/noticias', (req, res) => { 
     pool.query("SELECT * FROM Noticias ORDER BY data DESC", (err, results) => { 
         if (err) { return res.status(500).json({ "error": err.message }); } 
@@ -194,6 +192,5 @@ app.put('/api/partidas', checkAuth, (req, res) => {
 
 // --- INICIA O SERVIDOR ---
 app.listen(PORT, () => {
-    // Agora o log é mais simples e não confunde o Render com 'localhost'
     console.log(`Servidor rodando na porta ${PORT}`);
 });
